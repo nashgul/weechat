@@ -35,7 +35,6 @@ def now_playing(datos, channel, args):
             }
     
     info_array = get_info_array()
-
     message_color = "%s" % colors['darkblue']
     message = u'\x03' + message_color + 'esta reproduciendo' + u'\x0f'
     song_color = "%s" % colors['lightred']
@@ -46,20 +45,18 @@ def now_playing(datos, channel, args):
     bracket_1 = u'\x03' + brackets_color + '[' + u'\x0f' 
     bracket_2 = u'\x03' + brackets_color + ']' + u'\x0f'
     hyphen_color = "%s" % colors['yellow']
-    hyphen = u'\x03' + hyphen_color + '-' + u'\x0f'
+    hyphen = u'\x03' + hyphen_color + ' - ' + u'\x0f'
     at_color = "%s" % colors['yellow']
     at_sym = u'\x03' + at_color + '@' + u'\x0f'
     output_length_color = "%s" % colors['lightblue']
     output_length = u'\x03' + output_length_color + info_array[2] + u'\x0f'
-    length_color = "%s" % colors['lightblue']
-    length = u'\x03' + length_color + info_array[1] + u'\x0f'
+    length = ''
+    if info_array[1] != '0:00':
+        length_color = "%s" % colors['lightblue']
+        length = u'\x03' + length_color + hyphen + ' ' + info_array[1] + ' ' + u'\x0f'
     bitrate_color = "%s" % colors['lightmagenta']
     bitrate = u'\x03' + bitrate_color + info_array[3] + ' kbps' + u'\x0f'
-
-    if length == '0:00':
-        string = "%s %s %s %s %s" %(bracket_1, output_length, at_sym, bitrate, bracket_2)
-    else:
-        string = "%s %s %s %s %s %s %s" %(bracket_1, output_length, hyphen, length, at_sym, bitrate, bracket_2)
+    string = "%s %s %s%s %s %s" %(bracket_1, output_length, length, at_sym, bitrate, bracket_2)
     source = ''
     if song_filename.lower().startswith('http'):
         source = song_filename 
